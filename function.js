@@ -186,7 +186,7 @@ function oddOrEven(num){
  //HOISTING - behaviour in js where function declarations are moved to the top
  // before the code is executed
 
- hoistedFunc(); // this is wokrking because of hoisting
+ hoistedFunc(); // this is working because of hoisting
  function hoistedFunc(){
     console.log("I am a func dec");
     
