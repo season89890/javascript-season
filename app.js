@@ -1,102 +1,118 @@
-const cart = [
-  { title: "Laptop", price: 1000, quantity: 1 },
-  { title: "Headphones", price: 200, quantity: 2 },
-  { title: "Mouse", price: 50, quantity: 3 },
-  { title: "AirPods", price: 400, quantity: 2 },
-  { title: "TV", price: 1200, quantity: 2 },
-];
+//DOM - document object model
+// access elements on the page, change content, add or remove elements dynamically
+// respond to users interaction
 
+// access ? GET ELEMENTS ON THE PAGE
+// getelementbyid, getbytagName(h1, p), getelementbyClassnames
+//console.log(heading);
 
-// total amount
-// 1. Write a function that prints out the title of each product in the cart array.
-const printTitle = () => {
-  cart.map((product) => {
-    console.log(product.title);
-  });
-};
-printTitle();
+// const heading = document.getElementById("hello");
+// console.log(heading);
+const paragraphs = document.getElementsByClassName("para1");
 
-// 2. Write a function that calculates the total number of items (quantity) in the cart.
-const totalQuantity = () => cart.reduce((acc, curr) => acc + curr.quantity, 0);
-console.log(totalQuantity());
+console.log(paragraphs);
+console.log(paragraphs[0]);
 
-// 3. Write a function that finds and prints the most expensive product in the cart.
-const mostExpensive = () => {
-  let expensive = cart[0].price; //
-  let myDetails;
-  cart.map((product) => {
-    if (product.price > expensive) {
-      expensive = product.price;
-      myDetails = product;
-    }
-  });
-  return myDetails;
-};
-console.log(mostExpensive());
+//querySelector(first element), querySelectorAll (all elements that fits its selection)
+// uses css selections .classname #idName div .error
+// const para = document.querySelector("para1");
+// const paras = document.querySelectorAll("para1");
 
-//4. Write a function that calculates the total value of the cart by multiplying the price
-//and quantity for each product, and then summing up the results.
+// CHANGING CONTENT WITH JS
 
-const totalValueInCart = () => {
-  const total = cart.reduce((acc, curr) => acc + curr.price * curr.quantity, 0);
-  return total;
-};
-console.log(totalValueInCart());
+const heading = document.querySelector("#hello");
+// heading.textcontent += ", js is fun";
 
-//5. Write a function that filters and displays products that cost more 100
+const par = document.querySelector(".para1");
+par.innerText = "hello don practice";
 
-//6. Write a function that checks if a certain product is in the cart
-// based on its title.e.g is Laptop in the cart
-const searchItemInCart = (searchTerm) => {
-  const item = cart.find(
-    (product) => product.title.toLowerCase() === searchTerm.toLowerCase()
-  );
-  if (item) {
-    return item;
+const myDiv = document.querySelector("div");
+//  mydiv.innerHTML += "<p>p from js</p>";
+const username = "John";
+myDiv.innerHTML = `<h1>welcome ${username}</h1>`;
+
+//change attributes
+const beginPara = document.querySelector(".begin");
+
+beginPara.id = "okay";
+beginPara.className = "good";
+beginPara.style.color = "green";
+beginPara.style.backgroundColor = "purple";
+
+// interact with styles (classnames)
+const msgHeading = document.querySelector(".msg");
+// classname (totally overide)
+//msgHeading.className = "success";
+// classList (add remove contain)
+msgHeading.classList.add("success");
+// msgHeading.classList.remove("msg");
+console.log(msgHeading.classList.contains("msg"));
+
+// create dom elements
+const section = document.createElement("section");
+section.innerHTML = "<h1>Created from JS</h1> <p>hello here</p>";
+
+const body = document.querySelector("body");
+body.appendChild(section);
+
+// create a form and let it have two input filed of username password
+// append the form to the body
+const myform = document.createElement("form");
+myform.innerHTML = `<input placeholder='username' type='text'>
+                <input placeholder='password' type='password' >
+                <button>Login</button>`;
+body.appendChild(myform);
+const link = document.createElement("a");
+link.textContent = "Visit Facebook";
+link.href = "https://facebook.com";
+
+const nav = document.querySelector("nav");
+nav.appendChild(link);
+
+//responding to users interaction (click, submit, typing)
+// event - (event listener) event handler
+
+const btn = document.querySelector("button");
+
+// log user clicked
+btn.addEventListener("click", () => {
+  console.log("user clicked");
+  body.style.backgroundColor = "blue";
+});
+const body1 = document.querySelector(".textbtn");
+const desc = document.querySelector(".desc");
+body1.addEventListener("click", () => {
+  console.log("user clicked");
+  desc.style.display = "none";
+});
+// form handling -> submit (do sth)
+// 1. prevent the default bahaviour of the form
+// get the users input (.value)
+const form = document.querySelector("form");
+const usernameInput = document.querySelector("input");
+const smallError = document.querySelector("small");
+
+usernameInput.addEventListener("input", () => {
+  const usernameValue = usernameInput.value;
+  if (usernameValue.trim().length < 5) {
+    smallError.textContent = "The min username length is 5";
+    // usernameInput.style.border = "2px solid red";
+    usernameInput.className = "error";
   } else {
-    return "That item is not in your cart";
+    smallError.textContent = "";
+    usernameInput.className = "";
   }
-};
-console.log(searchItemInCart("tv"));
+});
 
-//7. Write a function that displays each product along with its total value (price * quantity).
-
-const displayItemValue = () => {
-  cart.forEach((product) => {
-    console.log(`${product.title} costs ${product.price * product.quantity}`);
-  });
-};
-console.log(displayItemValue());
-
-//8. Write a function that concatenates all the
-// product titles into a single string, separated by dash.
-const concatTitle = () => {
-  return cart.map((product) => product.title).join("-");
-};
-console.log(concatTitle());
-
-//9. Write a function that checks if the cart contains
-//any products that are more expensive than 70.
-const checkMore70 = () => {
-  return cart.some((product) => product.price > 70);
-};
-console.log(checkMore70());
-
-//10. Write a function that clears the entire cart (removes all products).
-const clearCart = ()=> []
-
-
-// function mEProduct () {
-//     const expensive = cart.reduce((prev, curr) => curr.price > prev.price ? curr : prev);
-//     console.log(expensive.title, expensive.price);
-    
-// };
-// console.log(mEProduct());
-
-
-
-
-
-
-
-
+form.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const usernameValue = usernameInput.value;
+  if (!usernameValue.trim()) {
+    smallError.textContent = "please provide a username";
+    usernameInput.className = "error";
+  } else {
+    console.log("form submitted", usernameValue);
+    smallError.textContent = "";
+    usernameInput.className = "";
+  }
+});
